@@ -12,11 +12,12 @@ class CreateAccountDialog(context: Context) : Dialog(context) {
         super.onCreate(savedInstanceState)
         binding = CreateAccountDialogBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setCancelable(false)
         initViews()
     }
 
     private fun initViews() = with(binding) {
+        setCancelable(false)
+        window?.setBackgroundDrawableResource(R.color.transparent)
         cancelButton.setOnClickListener {
             dismiss()
         }

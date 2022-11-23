@@ -24,6 +24,7 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun initDialog() {
         CreateAccountDialog(this).show()
+
     }
 
     private fun initViews() = with(binding) {
