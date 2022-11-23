@@ -39,8 +39,7 @@
         android:paddingHorizontal="15dp"
         app:layout_constraintBottom_toTopOf="@+id/tag_edittext_user_password"
         app:layout_constraintTop_toBottomOf="@+id/textview_title"
-        app:layout_constraintVertical_chainStyle="packed"
-        app:text="@string/user_id" />
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <EditText
         android:id="@+id/tag_edittext_user_password"
@@ -50,8 +49,7 @@
         android:paddingHorizontal="15dp"
         app:layout_constraintBottom_toTopOf="@+id/button_signin"
         app:layout_constraintTop_toBottomOf="@+id/tag_edittext_user_id"
-        app:layout_constraintVertical_chainStyle="packed"
-        app:text="@string/user_id" />
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <Button
         android:id="@+id/button_signin"
@@ -61,8 +59,7 @@
         android:text="login"
         app:layout_constraintBottom_toTopOf="@+id/button_signup"
         app:layout_constraintTop_toBottomOf="@+id/tag_edittext_user_password"
-        app:layout_constraintVertical_chainStyle="packed"
-        app:text="@string/sign_in" />
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <Button
         android:id="@+id/button_signup"
@@ -72,7 +69,6 @@
         android:text="Create account"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_signin"
-        app:layout_constraintVertical_chainStyle="packed"
-        app:text="@string/sign_in" />
+        app:layout_constraintVertical_chainStyle="packed" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

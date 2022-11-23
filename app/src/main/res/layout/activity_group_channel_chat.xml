@@ -21,6 +21,15 @@
             android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
 
+    <View
+        android:id="@+id/chat_input_base_view"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_chat"
         android:layout_width="match_parent"
@@ -31,23 +40,32 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:layout_constraintVertical_bias="0.0"
         app:stackFromEnd="true"
-        tools:layout_editor_absoluteX="-27dp"
+        tools:layout_editor_absoluteX="0dp"
         tools:listitem="@layout/item_message" />
 
     <EditText
         android:id="@+id/chat_input_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:background="@drawable/chat_base_input"
+        android:hint="input message..."
+        android:padding="7dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/chat_send_button"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.842"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/chat_input_base_view" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/chat_send_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="5dp"
         android:backgroundTint="@color/colorPrimary"
         android:text="send"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/chat_input_view"
+        app:layout_constraintTop_toTopOf="@+id/chat_input_base_view" />
 </androidx.constraintlayout.widget.ConstraintLayout>
