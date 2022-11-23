@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
                 when(item.itemId){
                     R.id.chat -> {showFragment(ChatListFragment())}
                     R.id.friends ->{showFragment(FriendFragment())}
-                    R.id.profile ->{showFragment(FriendFragment())}
+                    R.id.profile ->{showFragment(ProfileFragment())}
                     else -> false
                 }
             }
