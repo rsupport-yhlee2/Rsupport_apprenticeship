@@ -1,10 +1,11 @@
-package com.example.rsupportapprenticeship
+package com.example.rsupportapprenticeship.Presentation
 
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import com.example.rsupportapprenticeship.R
 import com.example.rsupportapprenticeship.databinding.CreateAccountDialogBinding
 
 class CreateAccountDialog(context: Context, private val mode: String) : Dialog(context) {
@@ -31,7 +32,11 @@ class CreateAccountDialog(context: Context, private val mode: String) : Dialog(c
                     val password = createPasswordInput.text
                     val nickname = createNicknameInput.text
                     Toast.makeText(context, "$id $password $nickname", Toast.LENGTH_SHORT).show()
-                    context.startActivity(Intent(context, MainActivity::class.java))
+                    context.startActivity(Intent(context, MainActivity::class.java).apply {
+                        this.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        this.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        this.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    })
                     dismiss()
                 }
             }

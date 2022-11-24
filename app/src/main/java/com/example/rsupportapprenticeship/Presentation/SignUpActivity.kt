@@ -1,17 +1,8 @@
-package com.example.rsupportapprenticeship
+package com.example.rsupportapprenticeship.Presentation
 
-import android.app.Dialog
-import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import com.example.rsupportapprenticeship.databinding.ActivitySignUpBinding
-import com.example.rsupportapprenticeship.databinding.CreateAccountDialogBinding
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding

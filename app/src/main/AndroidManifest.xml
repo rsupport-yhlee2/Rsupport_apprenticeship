@@ -15,16 +15,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RsupportApprenticeship"
         tools:targetApi="31">
-        <activity android:name=".CreateChatRoomActivity" />
+        <activity android:name=".Presentation.CreateChatRoomActivity" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Presentation.MainActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".SignUpActivity"
+            android:name=".Presentation.SignUpActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

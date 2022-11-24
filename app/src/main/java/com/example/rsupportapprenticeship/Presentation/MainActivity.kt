@@ -1,8 +1,9 @@
-package com.example.rsupportapprenticeship
+package com.example.rsupportapprenticeship.Presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import com.example.rsupportapprenticeship.R
 import com.example.rsupportapprenticeship.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
