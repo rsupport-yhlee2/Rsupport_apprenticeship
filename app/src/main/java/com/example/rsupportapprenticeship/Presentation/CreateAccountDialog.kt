@@ -4,6 +4,8 @@ import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.widget.TextView
 import android.widget.Toast
 import com.example.rsupportapprenticeship.Data.SendbirdService
 import com.example.rsupportapprenticeship.Data.UserDTO
@@ -11,6 +13,7 @@ import com.example.rsupportapprenticeship.Key
 import com.example.rsupportapprenticeship.R
 import com.example.rsupportapprenticeship.databinding.CreateAccountDialogBinding
 import com.sendbird.android.SendbirdChat
+import com.sendbird.android.params.UserUpdateParams
 import kotlinx.coroutines.*
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -57,14 +60,35 @@ class CreateAccountDialog(context: Context, private val mode: String) : Dialog(c
                 createIDInput.isEnabled = false
                 createButton.text = "update"
                 createButton.setOnClickListener {
-                    val password = createPasswordInput.text
-                    val nickname = createNicknameInput.text
+                    val password = createPasswordInput.text.toString()
+                    val nickname = createNicknameInput.text.toString()
+                    val token =
+                        SendbirdChat.currentUser?.metaData?.values.toString().replace("[", "")
+                            .replace("]", "")
+                    updateUser(nickname, password, token)
                     Toast.makeText(context, " $password $nickname", Toast.LENGTH_SHORT).show()
                     dismiss()
                 }
             }
         }
     }
+
+    private fun updateUser(nickname: String, password: String, token: String) =
+        launch(Dispatchers.IO) {
+            SendbirdChat.currentUser?.deleteAllMetaData() {
+                SendbirdChat.currentUser?.createMetaData(mapOf(password to token)) { data, e ->
+
+                }
+            }
+            val params = UserUpdateParams().apply {
+                this.nickname = nickname
+            }
+            SendbirdChat.updateCurrentUserInfo(params) { e ->
+                if (e != null) {
+                    Log.e("update", "success")
+                }
+            }
+        }
 
     private fun createUser(userID: String, nickname: String, password: String) = launch {
         val job = sendbirdService.createOneUser(
