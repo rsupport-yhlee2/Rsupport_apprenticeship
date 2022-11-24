@@ -5,13 +5,29 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import com.example.rsupportapprenticeship.Data.SendbirdService
+import com.example.rsupportapprenticeship.Data.UserDTO
+import com.example.rsupportapprenticeship.Key
 import com.example.rsupportapprenticeship.R
 import com.example.rsupportapprenticeship.databinding.CreateAccountDialogBinding
+import com.sendbird.android.SendbirdChat
+import kotlinx.coroutines.*
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import kotlin.coroutines.CoroutineContext
 
-class CreateAccountDialog(context: Context, private val mode: String) : Dialog(context) {
+class CreateAccountDialog(context: Context, private val mode: String) : Dialog(context),
+    CoroutineScope {
     private lateinit var binding: CreateAccountDialogBinding
+    private lateinit var retrofit: Retrofit
+    private lateinit var sendbirdService: SendbirdService
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        retrofit = Retrofit.Builder()
+            .baseUrl(Key.API_REQUEST_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        sendbirdService = retrofit.create(SendbirdService::class.java)
         binding = CreateAccountDialogBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initViews()
@@ -28,20 +44,16 @@ class CreateAccountDialog(context: Context, private val mode: String) : Dialog(c
                 createIDInput.isEnabled = true
                 createButton.text = "create"
                 createButton.setOnClickListener {
-                    val id = createIDInput.text
-                    val password = createPasswordInput.text
-                    val nickname = createNicknameInput.text
+                    val id = createIDInput.text.toString()
+                    val password = createPasswordInput.text.toString()
+                    val nickname = createNicknameInput.text.toString()
                     Toast.makeText(context, "$id $password $nickname", Toast.LENGTH_SHORT).show()
-                    context.startActivity(Intent(context, MainActivity::class.java).apply {
-                        this.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                        this.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                        this.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                    })
+                    createUser(id, nickname, password)
                     dismiss()
                 }
             }
             "update" -> {
-                createIDInput.setText("set user ID")
+                createIDInput.setText("Not Editable")
                 createIDInput.isEnabled = false
                 createButton.text = "update"
                 createButton.setOnClickListener {
@@ -53,4 +65,35 @@ class CreateAccountDialog(context: Context, private val mode: String) : Dialog(c
             }
         }
     }
+
+    private fun createUser(userID: String, nickname: String, password: String) = launch {
+        val job = sendbirdService.createOneUser(
+            Key.CONTENT_TYPE,
+            Key.API_TOKEN,
+            UserDTO(userID, nickname, "", "", true)
+        )
+        setPassword(userID, password)
+    }
+
+    private fun setPassword(userID: String, password: String) = launch {
+        val response = sendbirdService.getOneUser(Key.CONTENT_TYPE, Key.API_TOKEN, userID)
+        response.body().let {
+            SendbirdChat.connect(userID, it?.access_token) { user, e ->
+                if (user != null) {
+                    it?.let {
+                        user.createMetaData(mapOf(password to it.access_token)) { data, e ->
+                            context.startActivity(Intent(context, MainActivity::class.java).apply {
+                                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                            })
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.IO + Job()
 }

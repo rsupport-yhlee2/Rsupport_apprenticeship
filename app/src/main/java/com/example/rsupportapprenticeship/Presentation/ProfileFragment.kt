@@ -26,7 +26,10 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     }
 
     private fun initViews() = with(binding){
-        profileID.text = "im yunho test"
+        val id = requireActivity().intent?.getStringExtra("userID")
+        val nickname = requireActivity().intent?.getStringExtra("nickname")
+        profileID.text = id
+        profileNickname.text = nickname
         profileUpdateButton.setOnClickListener {
             initDialog()
         }
