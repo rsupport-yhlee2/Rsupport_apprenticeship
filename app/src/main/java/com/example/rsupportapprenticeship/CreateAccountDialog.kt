@@ -7,7 +7,7 @@ import android.os.Bundle
 import android.widget.Toast
 import com.example.rsupportapprenticeship.databinding.CreateAccountDialogBinding
 
-class CreateAccountDialog(context: Context) : Dialog(context) {
+class CreateAccountDialog(context: Context, private val mode: String) : Dialog(context) {
     private lateinit var binding: CreateAccountDialogBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,13 +22,30 @@ class CreateAccountDialog(context: Context) : Dialog(context) {
         cancelButton.setOnClickListener {
             dismiss()
         }
-        createButton.setOnClickListener {
-            val id = createIDInput.text
-            val password = createPasswordInput.text
-            val nickname = createNicknameInput.text
-            Toast.makeText(context, "$id $password $nickname", Toast.LENGTH_SHORT).show()
-            context.startActivity(Intent(context,MainActivity::class.java))
-            dismiss()
+        when (mode) {
+            "create" -> {
+                createIDInput.isEnabled = true
+                createButton.text = "create"
+                createButton.setOnClickListener {
+                    val id = createIDInput.text
+                    val password = createPasswordInput.text
+                    val nickname = createNicknameInput.text
+                    Toast.makeText(context, "$id $password $nickname", Toast.LENGTH_SHORT).show()
+                    context.startActivity(Intent(context, MainActivity::class.java))
+                    dismiss()
+                }
+            }
+            "update" -> {
+                createIDInput.setText("set user ID")
+                createIDInput.isEnabled = false
+                createButton.text = "update"
+                createButton.setOnClickListener {
+                    val password = createPasswordInput.text
+                    val nickname = createNicknameInput.text
+                    Toast.makeText(context, " $password $nickname", Toast.LENGTH_SHORT).show()
+                    dismiss()
+                }
+            }
         }
     }
 }

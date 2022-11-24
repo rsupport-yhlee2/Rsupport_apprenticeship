@@ -23,7 +23,7 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun initDialog() {
-        CreateAccountDialog(this).show()
+        CreateAccountDialog(this,"create").show()
 
     }
 
