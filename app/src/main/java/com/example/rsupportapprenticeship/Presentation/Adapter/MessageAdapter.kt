@@ -1,5 +1,6 @@
 package com.example.rsupportapprenticeship.Presentation.Adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isGone
@@ -21,6 +22,7 @@ class MessageAdapter : RecyclerView.Adapter<MessageAdapter.ViewHolder>() {
                 messageOther.isGone = true
                 profile.isGone = true
             } else {
+                Log.e("message","${SendbirdChat.currentUser?.nickname} == ${message.customType}")
                 messageOther.text = message.message
                 nicknameText.text = message.customType
                 messageYou.isGone = true

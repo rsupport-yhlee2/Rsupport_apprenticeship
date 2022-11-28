@@ -89,7 +89,7 @@ class FriendFragment : Fragment(R.layout.fragment_friend), CoroutineScope {
                 setPositiveButton("yes") { dialog, which ->
                     Toast.makeText(requireContext(),"그룹챗 생성", Toast.LENGTH_SHORT).show()
                     val channelName = input.text.toString()
-                    createGroupChannel(channelName,friendIDList)
+                    createGroupChannel(channelName,selectedUser)
                     val main = activity as MainActivity
                     main.showFragment(FriendFragment())
                 }

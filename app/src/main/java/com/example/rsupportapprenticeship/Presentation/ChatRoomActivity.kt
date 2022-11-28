@@ -13,6 +13,7 @@ import com.sendbird.android.channel.GroupChannel
 import com.sendbird.android.handler.OpenChannelHandler
 import com.sendbird.android.message.BaseMessage
 import com.sendbird.android.message.UserMessage
+import com.sendbird.android.params.PreviousMessageListQueryParams
 import com.sendbird.android.params.UserMessageCreateParams
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
@@ -48,15 +49,15 @@ class ChatRoomActivity : AppCompatActivity(), CoroutineScope {
             }
             channel?.let {
                 currentChannel = it
-                Log.e("channel", "$currentChannel")
                 getMessageFromChannel(it.name)
+                loadPreviousMessage(currentChannel)
             }
         }
     }
 
     private fun sendMessage(message: String) {
         currentChannel.sendUserMessage(UserMessageCreateParams(message).apply {
-            customType = SendbirdChat.currentUser?.userId.toString()
+            customType = SendbirdChat.currentUser?.nickname.toString()
         }) { message, e ->
             if (e != null) {
 
@@ -66,6 +67,23 @@ class ChatRoomActivity : AppCompatActivity(), CoroutineScope {
             }
         }
     }
+
+    private fun loadPreviousMessage(groupChannel: GroupChannel) {
+        val query = groupChannel.createPreviousMessageListQuery(
+            PreviousMessageListQueryParams()
+        )
+        query.load() { messages, e ->
+            if (e != null) {
+
+            }
+            messages?.forEach {
+                val message = it as UserMessage
+                adapter.addMessage(message)
+                //Log.e("message", "$message")
+            }
+        }
+    }
+
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + Job()
