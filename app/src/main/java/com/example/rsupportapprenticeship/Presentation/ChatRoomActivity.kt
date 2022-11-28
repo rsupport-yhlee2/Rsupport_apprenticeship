@@ -57,13 +57,19 @@ class ChatRoomActivity : AppCompatActivity(), CoroutineScope {
 
     private fun sendMessage(message: String) {
         currentChannel.sendUserMessage(UserMessageCreateParams(message).apply {
-            customType = SendbirdChat.currentUser?.nickname.toString()
+            if (SendbirdChat.currentUser?.profileUrl?.length == 0) {
+                customType = SendbirdChat.currentUser?.nickname.toString()
+            } else {
+                customType =
+                    SendbirdChat.currentUser?.nickname.toString() + " " + SendbirdChat.currentUser?.profileUrl
+            }
         }) { message, e ->
             if (e != null) {
 
             }
             message?.let {
                 adapter.addMessage(it)
+                Log.e("mess", "$it")
             }
         }
     }
@@ -87,7 +93,8 @@ class ChatRoomActivity : AppCompatActivity(), CoroutineScope {
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + Job()
-    private fun getMessageFromChannel(id : String) {
+
+    private fun getMessageFromChannel(id: String) {
         SendbirdChat.addChannelHandler(
             id,
             object : OpenChannelHandler() {

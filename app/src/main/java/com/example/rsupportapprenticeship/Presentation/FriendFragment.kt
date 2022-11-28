@@ -51,6 +51,7 @@ class FriendFragment : Fragment(R.layout.fragment_friend), CoroutineScope {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.e("fr","onCreate")
         initViews()
     }
 
@@ -81,7 +82,6 @@ class FriendFragment : Fragment(R.layout.fragment_friend), CoroutineScope {
         }
 
         groupChatButton.setOnClickListener {
-            Toast.makeText(requireContext(),"그룹챗 생성", Toast.LENGTH_SHORT).show()
             val input = EditText(requireContext())
             AlertDialog.Builder(requireContext()).apply {
                 setTitle("create Groupchat")
@@ -106,6 +106,7 @@ class FriendFragment : Fragment(R.layout.fragment_friend), CoroutineScope {
     }
 
     private fun readFriends() {
+        Log.e("fr","readFriend")
         SendbirdChat.getFriendChangeLogsByToken(
             ""
         ) { updatedUsers, deletedUserIds, hasMore, token, e ->
@@ -118,6 +119,7 @@ class FriendFragment : Fragment(R.layout.fragment_friend), CoroutineScope {
                     friendIDList.add(it)
                 }
             }
+            Log.e("fr","${friendIDList}")
             friendIDList.forEach {
                 launch {
                     val friend = sendbirdService.getOneUser(Key.CONTENT_TYPE, Key.API_TOKEN, it)
@@ -125,6 +127,7 @@ class FriendFragment : Fragment(R.layout.fragment_friend), CoroutineScope {
                         friendList.add(it)
                     }
                     withContext(Dispatchers.Main) {
+                        Log.e("fr","${friendList.toString()}")
                         adapter.setData(friendList.toTypedArray()) {
                             selectUser(it.user_id)
                         }

@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isGone
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.rsupportapprenticeship.databinding.ItemMessageBinding
 import com.sendbird.android.SendbirdChat
 import com.sendbird.android.message.UserMessage
-import com.sendbird.android.params.UserMessageCreateParams
 
 class MessageAdapter : RecyclerView.Adapter<MessageAdapter.ViewHolder>() {
     private var messageList = mutableListOf<UserMessage>()
@@ -16,15 +16,28 @@ class MessageAdapter : RecyclerView.Adapter<MessageAdapter.ViewHolder>() {
     inner class ViewHolder(private val binding: ItemMessageBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bindData(message: UserMessage) = with(binding) {
-            if (SendbirdChat.currentUser?.nickname == message.customType) {
+            var url = ""
+            var nickname = ""
+            val data = message.customType.split(" ")
+            if (data.size == 1) {
+                nickname = data[0]
+            } else {
+                nickname = data[0]
+                url = data[1]
+            }
+            if (SendbirdChat.currentUser?.nickname == nickname) {
                 messageYou.text = message.message
                 nicknameText.isGone = true
                 messageOther.isGone = true
                 profile.isGone = true
             } else {
-                Log.e("message","${SendbirdChat.currentUser?.nickname} == ${message.customType}")
                 messageOther.text = message.message
-                nicknameText.text = message.customType
+                nicknameText.text = nickname
+                if (url.isNotEmpty()) {
+                    Glide.with(profile)
+                        .load(url)
+                        .into(profile)
+                }
                 messageYou.isGone = true
             }
         }
@@ -41,7 +54,7 @@ class MessageAdapter : RecyclerView.Adapter<MessageAdapter.ViewHolder>() {
         holder.bindData(messageList[position])
     }
 
-    fun setData(list: List<UserMessage>){
+    fun setData(list: List<UserMessage>) {
         messageList = list.toMutableList()
         notifyDataSetChanged()
     }

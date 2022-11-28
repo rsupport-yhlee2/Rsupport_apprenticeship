@@ -4,6 +4,7 @@ import android.content.DialogInterface.OnClickListener
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.rsupportapprenticeship.Data.UserResponse
 import com.example.rsupportapprenticeship.R
 import com.example.rsupportapprenticeship.databinding.ItemFriendBinding
@@ -21,6 +22,12 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.ViewHolder>() {
         fun bind(user: UserResponse) {
             binding.friendId.text = user.user_id
             binding.friendNickname.text = user.nickname
+            val profile = user.profile_url
+            if (profile != "") {
+                Glide.with(binding.friendProfile)
+                    .load(profile)
+                    .into(binding.friendProfile)
+            }
             if (user.is_online) {
                 binding.onlineStatus.setBackgroundResource(R.color.online)
             } else {
@@ -28,10 +35,10 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.ViewHolder>() {
             }
             binding.root.setOnClickListener {
                 listener(user)
-                if(check){
+                if (check) {
                     binding.root.setBackgroundResource(R.color.white)
                     check = false
-                }else{
+                } else {
                     binding.root.setBackgroundResource(R.color.purple_500)
                     check = true
                 }
