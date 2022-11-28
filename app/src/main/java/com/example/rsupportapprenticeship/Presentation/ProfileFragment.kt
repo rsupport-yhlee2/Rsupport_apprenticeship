@@ -97,6 +97,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile), CoroutineScope {
             }
         }
         signOutButton.setOnClickListener {
+            Toast.makeText(requireContext(),"로그아웃",Toast.LENGTH_SHORT).show()
             SendbirdChat.disconnect() {
                 requireActivity().finish()
             }

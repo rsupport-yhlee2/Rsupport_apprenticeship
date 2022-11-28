@@ -5,7 +5,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rsupportapprenticeship.Data.SendbirdService
@@ -16,8 +18,10 @@ import com.example.rsupportapprenticeship.R
 import com.example.rsupportapprenticeship.databinding.FragmentFriendBinding
 import com.google.gson.JsonObject
 import com.sendbird.android.SendbirdChat
+import com.sendbird.android.channel.GroupChannel
 import com.sendbird.android.exception.SendbirdException
 import com.sendbird.android.handler.CompletionHandler
+import com.sendbird.android.params.GroupChannelCreateParams
 import kotlinx.coroutines.*
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -75,6 +79,24 @@ class FriendFragment : Fragment(R.layout.fragment_friend), CoroutineScope {
             main.showFragment(FriendFragment())
             Toast.makeText(requireContext(),"친구삭제 완료", Toast.LENGTH_SHORT).show()
         }
+
+        groupChatButton.setOnClickListener {
+            Toast.makeText(requireContext(),"그룹챗 생성", Toast.LENGTH_SHORT).show()
+            val input = EditText(requireContext())
+            AlertDialog.Builder(requireContext()).apply {
+                setTitle("create Groupchat")
+                setView(input)
+                setPositiveButton("yes") { dialog, which ->
+                    Toast.makeText(requireContext(),"그룹챗 생성", Toast.LENGTH_SHORT).show()
+                    val channelName = input.text.toString()
+                    createGroupChannel(channelName,friendIDList)
+                    val main = activity as MainActivity
+                    main.showFragment(FriendFragment())
+                }
+                setNegativeButton("no") { _, _ -> }
+                show()
+            }
+        }
     }
 
     private fun deleteFriends(users: List<String>) {
@@ -108,6 +130,22 @@ class FriendFragment : Fragment(R.layout.fragment_friend), CoroutineScope {
                         }
                     }
                 }
+            }
+        }
+    }
+    private fun createGroupChannel(channelName: String, users: List<String>) {
+        val params = GroupChannelCreateParams().apply {
+            name = channelName
+            coverUrl = ""
+            userIds = users
+            operatorUserIds = listOf("${SendbirdChat.currentUser?.userId}")
+        }
+
+        GroupChannel.createChannel(params) { channel, e ->
+            if (e != null) {
+            }
+            if (channel != null) {
+                Log.e("GroupChannel:", "${channel}")
             }
         }
     }

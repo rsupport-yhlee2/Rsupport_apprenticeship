@@ -28,6 +28,17 @@
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
         android:backgroundTint="@color/colorPrimary"
+        android:src="@drawable/ic_baseline_clear_24"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/group_chat_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:src="@drawable/ic_baseline_chat_bubble_24"
+        app:layout_constraintBottom_toTopOf="@+id/delete_friend_button"
         app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
