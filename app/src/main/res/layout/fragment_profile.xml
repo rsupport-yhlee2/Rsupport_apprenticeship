@@ -12,7 +12,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/profile_View"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="150dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
@@ -28,60 +28,87 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/profile_ID"
+            android:id="@+id/profile_ID_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:text="test ID"
-            app:layout_constraintStart_toEndOf="@+id/profile_Image"
+            android:text="ID: "
+            app:layout_constraintEnd_toEndOf="@+id/profile_nickname_text"
             app:layout_constraintTop_toTopOf="@+id/profile_Image" />
+
+        <TextView
+            android:id="@+id/profile_ID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="test ID"
+            app:layout_constraintStart_toEndOf="@+id/profile_ID_text"
+            app:layout_constraintTop_toTopOf="@+id/profile_ID_text" />
+
+        <TextView
+            android:id="@+id/profile_nickname_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:text="nickname: "
+            app:layout_constraintStart_toEndOf="@+id/profile_Image"
+            app:layout_constraintTop_toBottomOf="@+id/profile_ID" />
 
         <TextView
             android:id="@+id/profile_nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginStart="5dp"
             android:text="test nickname"
-            app:layout_constraintStart_toEndOf="@+id/profile_Image"
-            app:layout_constraintTop_toBottomOf="@+id/profile_ID" />
+            app:layout_constraintStart_toEndOf="@+id/profile_nickname_text"
+            app:layout_constraintTop_toTopOf="@+id/profile_nickname_text" />
 
         <Button
             android:id="@+id/set_profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
+            android:backgroundTint="@color/colorPrimary"
             android:text="set profile"
+            android:textSize="10dp"
             app:layout_constraintBottom_toTopOf="@+id/label"
+            app:layout_constraintEnd_toStartOf="@id/profile_update_button"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/profile_update_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:backgroundTint="@color/colorPrimary"
             android:text="update"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textSize="10dp"
+            app:layout_constraintBottom_toBottomOf="@id/set_profile"
+            app:layout_constraintEnd_toStartOf="@+id/profile_delete_button"
+            app:layout_constraintStart_toEndOf="@+id/set_profile" />
 
         <Button
             android:id="@+id/profile_delete_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+
+            android:backgroundTint="@color/colorPrimary"
             android:text="delete"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profile_update_button" />
+            android:textSize="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/profile_update_button"
+            app:layout_constraintEnd_toStartOf="@+id/sign_out_button"
+            app:layout_constraintStart_toEndOf="@+id/profile_update_button" />
 
         <Button
             android:id="@+id/sign_out_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:backgroundTint="@color/colorPrimary"
             android:text="sign out"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textSize="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/profile_delete_button"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/profile_delete_button" />
+            app:layout_constraintStart_toEndOf="@+id/profile_delete_button" />
 
         <TextView
             android:id="@+id/label"

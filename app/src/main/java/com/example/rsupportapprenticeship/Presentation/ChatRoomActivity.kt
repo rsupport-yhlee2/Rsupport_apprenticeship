@@ -58,10 +58,11 @@ class ChatRoomActivity : AppCompatActivity(), CoroutineScope {
     private fun sendMessage(message: String) {
         currentChannel.sendUserMessage(UserMessageCreateParams(message).apply {
             if (SendbirdChat.currentUser?.profileUrl?.length == 0) {
-                customType = SendbirdChat.currentUser?.nickname.toString()
+                customType =
+                    SendbirdChat.currentUser?.nickname.toString() + " " + SendbirdChat.currentUser?.userId.toString()
             } else {
                 customType =
-                    SendbirdChat.currentUser?.nickname.toString() + " " + SendbirdChat.currentUser?.profileUrl
+                    SendbirdChat.currentUser?.nickname.toString() + " " + SendbirdChat.currentUser?.userId.toString() + " " + SendbirdChat.currentUser?.profileUrl
             }
         }) { message, e ->
             if (e != null) {

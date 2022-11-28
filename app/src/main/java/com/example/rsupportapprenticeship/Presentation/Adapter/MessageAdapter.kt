@@ -18,14 +18,19 @@ class MessageAdapter : RecyclerView.Adapter<MessageAdapter.ViewHolder>() {
         fun bindData(message: UserMessage) = with(binding) {
             var url = ""
             var nickname = ""
+            var userID = ""
             val data = message.customType.split(" ")
-            if (data.size == 1) {
+            Log.e("data:","${data}")
+            if (data.size == 2) {
                 nickname = data[0]
+                userID = data[1]
             } else {
                 nickname = data[0]
-                url = data[1]
+                userID = data[1]
+                url = data[2]
             }
-            if (SendbirdChat.currentUser?.nickname == nickname) {
+            //userID 기준으로 판단하도록 수정
+            if (SendbirdChat.currentUser?.userId == userID) {
                 messageYou.text = message.message
                 nicknameText.isGone = true
                 messageOther.isGone = true
