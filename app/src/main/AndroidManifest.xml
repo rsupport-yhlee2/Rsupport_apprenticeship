@@ -15,6 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RsupportApprenticeship"
         tools:targetApi="31">
+        <activity android:name=".Presentation.ChatRoomActivity"/>
         <activity android:name=".Presentation.CreateChatRoomActivity" />
         <activity
             android:name=".Presentation.MainActivity"

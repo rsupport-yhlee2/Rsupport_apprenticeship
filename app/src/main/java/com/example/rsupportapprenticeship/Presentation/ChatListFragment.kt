@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.rsupportapprenticeship.Presentation.Adapter.ChatRoomAdapter
 import com.example.rsupportapprenticeship.R
 import com.example.rsupportapprenticeship.databinding.FragmentChatListBinding
 import com.sendbird.android.channel.GroupChannel
@@ -17,6 +19,7 @@ import com.sendbird.android.params.PublicGroupChannelListQueryParams
 
 class ChatListFragment : Fragment(R.layout.fragment_chat_list) {
     private lateinit var binding: FragmentChatListBinding
+    private val adapter = ChatRoomAdapter()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -32,17 +35,8 @@ class ChatListFragment : Fragment(R.layout.fragment_chat_list) {
     }
 
     private fun initViews() = with(binding) {
-        makeChatRoomButton.setOnClickListener {
-            requireContext().startActivity(
-                Intent(
-                    requireContext(),
-                    CreateChatRoomActivity::class.java
-                ).apply {
-                    this.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    this.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    this.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                })
-        }
+        binding.chatRoomList.adapter = adapter
+        binding.chatRoomList.layoutManager = LinearLayoutManager(requireContext())
         retrieveGroupChannel()
     }
     private fun retrieveGroupChannel() {
@@ -55,14 +49,12 @@ class ChatListFragment : Fragment(R.layout.fragment_chat_list) {
             }
         )
         query.next { channels, e ->
-            channels?.forEach { channel ->
-                val channelName = channel.name
-                var channelMember = ""
-                channel.members.forEach { member ->
-                    channelMember += member.nickname + " "
+            channels?.let {
+                adapter.setData(channels){
+                    context?.startActivity(Intent(requireContext(),ChatRoomActivity::class.java).apply {
+                        putExtra("channel",it.url)
+                    })
                 }
-                val channelUrl = channel.url
-                Log.e("groupChannel:","${channelName} $channelMember $channelUrl")
             }
         }
     }
