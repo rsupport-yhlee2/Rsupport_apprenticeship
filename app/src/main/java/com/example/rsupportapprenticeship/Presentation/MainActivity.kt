@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         }
     }
 
-    private fun showFragment(fragment: Fragment): Boolean {
+    fun showFragment(fragment: Fragment): Boolean {
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.container, fragment)
             commit()
