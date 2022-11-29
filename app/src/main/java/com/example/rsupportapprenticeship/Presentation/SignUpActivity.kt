@@ -72,7 +72,9 @@ class SignUpActivity : AppCompatActivity(), CoroutineScope {
                 })
             }
         } else {
-            Log.e("login", "no user")
+            withContext(Dispatchers.Main){
+                Toast.makeText(this@SignUpActivity, "존재하지 않는 유저입니다.", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

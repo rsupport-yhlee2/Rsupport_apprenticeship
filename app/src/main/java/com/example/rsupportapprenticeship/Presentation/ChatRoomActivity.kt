@@ -163,6 +163,7 @@ class ChatRoomActivity : AppCompatActivity(), CoroutineScope {
             message?.let {
                 adapter.addMessage(it)
                 Log.e("mess", "$it")
+                binding.chatInputView.text.clear()
             }
         }
     }

@@ -51,7 +51,6 @@ class FriendFragment : Fragment(R.layout.fragment_friend), CoroutineScope {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.e("fr","onCreate")
         initViews()
     }
 
@@ -106,7 +105,6 @@ class FriendFragment : Fragment(R.layout.fragment_friend), CoroutineScope {
     }
 
     private fun readFriends() {
-        Log.e("fr","readFriend")
         SendbirdChat.getFriendChangeLogsByToken(
             ""
         ) { updatedUsers, deletedUserIds, hasMore, token, e ->

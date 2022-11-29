@@ -50,7 +50,7 @@ class CreateAccountDialog(context: Context, private val mode: String) : Dialog(c
                     val id = createIDInput.text.toString()
                     val password = createPasswordInput.text.toString()
                     val nickname = createNicknameInput.text.toString()
-                    Toast.makeText(context, "$id $password $nickname", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "계정 생성 성공!", Toast.LENGTH_SHORT).show()
                     createUser(id, nickname, password)
                     dismiss()
                 }
