@@ -2,6 +2,11 @@ package com.example.rsupportapprenticeship.Presentation
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.EditText
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rsupportapprenticeship.Presentation.Adapter.MessageAdapter
@@ -13,6 +18,7 @@ import com.sendbird.android.channel.GroupChannel
 import com.sendbird.android.handler.OpenChannelHandler
 import com.sendbird.android.message.BaseMessage
 import com.sendbird.android.message.UserMessage
+import com.sendbird.android.params.GroupChannelUpdateParams
 import com.sendbird.android.params.PreviousMessageListQueryParams
 import com.sendbird.android.params.UserMessageCreateParams
 import kotlinx.coroutines.*
@@ -41,6 +47,92 @@ class ChatRoomActivity : AppCompatActivity(), CoroutineScope {
             val message = chatInputView.text.toString()
             sendMessage(message)
         }
+        setCustomToolBar()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.option_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.set_chat_room_profile -> {
+                Toast.makeText(this, "select", Toast.LENGTH_SHORT).show()
+                setChatProfile()
+            }
+            R.id.quit_chat_room -> {
+                alertPopup()
+            }
+            R.id.invite_user -> {
+                inviteUserPopup()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun alertPopup() {
+        AlertDialog.Builder(this).apply {
+            setTitle("leave room")
+            setPositiveButton("yes") { dialog, which ->
+                currentChannel.leave {
+                    finish()
+                }
+            }
+            setNegativeButton("no") { _, _ -> }
+            show()
+        }
+    }
+
+    private fun inviteUserPopup() {
+        val input = EditText(this)
+        input.hint = "UserID"
+        AlertDialog.Builder(this).apply {
+            setTitle("invite User!")
+            setView(input)
+            setPositiveButton("yes") { dialog, which ->
+                val userID = input.text.toString()
+                inviteUser(userID)
+            }
+            setNegativeButton("no") { _, _ -> }
+            show()
+        }
+    }
+
+    private fun inviteUser(userID: String) {
+        currentChannel.invite(listOf(userID)) {
+
+        }
+    }
+
+    private fun setChatProfile() {
+        val input = EditText(this)
+        input.hint = "profileURL"
+        AlertDialog.Builder(this).apply {
+            setTitle("set CoverImage")
+            setView(input)
+            setPositiveButton("yes") { dialog, which ->
+                val profileURL = input.text.toString()
+                updateGroupChannel(profileURL)
+            }
+            setNegativeButton("no") { _, _ -> }
+            show()
+        }
+    }
+
+    private fun updateGroupChannel(url: String) {
+        currentChannel.updateChannel(GroupChannelUpdateParams().apply {
+            coverUrl = url
+        }) { channel, e ->
+
+        }
+    }
+
+    private fun setCustomToolBar() {
+        val toolbar = binding.toolbar
+        setSupportActionBar(toolbar)
+        actionBar?.setDisplayShowTitleEnabled(false)
     }
 
     private fun retrieveGroupChannelByUrl(url: String) {
