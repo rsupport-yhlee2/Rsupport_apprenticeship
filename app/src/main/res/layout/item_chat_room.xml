@@ -1,26 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/room_profile"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="@color/colorPrimary"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_margin="15dp" />
 
     <TextView
         android:id="@+id/chat_room_name"
+        app:layout_constraintStart_toEndOf="@+id/room_profile"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="chatRoom1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:text="chatRoom1"
         android:textSize="25dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/chat_room_member"
+        android:id="@+id/chat_room_member_list"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/chat_room_name"
+        app:layout_constraintTop_toBottomOf="@+id/chat_room_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
+        android:text="member:"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/chat_room_member"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/chat_room_name"
-        app:layout_constraintTop_toBottomOf="@+id/chat_room_name" />
+        app:layout_constraintStart_toEndOf="@+id/chat_room_member_list"
+        app:layout_constraintTop_toBottomOf="@+id/chat_room_name"
+        tools:text="hello"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
