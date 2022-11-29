@@ -6,16 +6,27 @@
     android:layout_height="match_parent"
     tools:context=".Presentation.ChatListFragment">
 
-    <include layout="@layout/sendbird_toolbar" android:id="@+id/toolbar" />
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/sendbird_toolbar" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/chat_room_list"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refresh"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        tools:listitem="@layout/item_chat_room" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/chat_room_list"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/item_chat_room" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

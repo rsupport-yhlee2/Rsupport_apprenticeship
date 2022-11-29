@@ -35,6 +35,10 @@ class ChatListFragment : Fragment(R.layout.fragment_chat_list) {
     }
 
     private fun initViews() = with(binding) {
+        refresh.setOnRefreshListener {
+            val main = activity as MainActivity
+            main.showFragment(ChatListFragment())
+        }
         binding.chatRoomList.adapter = adapter
         binding.chatRoomList.layoutManager = LinearLayoutManager(requireContext())
         retrieveGroupChannel()
