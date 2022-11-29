@@ -33,6 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:text="ID: "
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/profile_nickname_text"
             app:layout_constraintTop_toTopOf="@+id/profile_Image" />
 
@@ -52,6 +53,7 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
             android:text="nickname: "
+            android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/profile_Image"
             app:layout_constraintTop_toBottomOf="@+id/profile_ID" />
 
