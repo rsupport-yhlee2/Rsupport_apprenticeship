@@ -59,7 +59,6 @@ class ChatRoomActivity : AppCompatActivity(), CoroutineScope {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.set_chat_room_profile -> {
-                Toast.makeText(this, "select", Toast.LENGTH_SHORT).show()
                 setChatProfile()
             }
             R.id.quit_chat_room -> {

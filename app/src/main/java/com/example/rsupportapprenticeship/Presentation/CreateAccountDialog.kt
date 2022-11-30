@@ -66,7 +66,6 @@ class CreateAccountDialog(context: Context, private val mode: String) : Dialog(c
                         SendbirdChat.currentUser?.metaData?.values.toString().replace("[", "")
                             .replace("]", "")
                     updateUser(nickname, password, token)
-                    Toast.makeText(context, " $password $nickname", Toast.LENGTH_SHORT).show()
                     dismiss()
                 }
             }
